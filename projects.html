@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Work — Suliman</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      margin-top: 3rem;
+    }
+
+    @media (min-width: 720px) {
+      .projects-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    .project-card {
+      background: var(--bg-glass);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, var(--accent-glow), transparent 50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+
+    .project-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-3px);
+    }
+
+    .project-card:hover::before { opacity: 0.15; }
+
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+      gap: 1rem;
+      position: relative;
+    }
+
+    .project-title {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      color: var(--fg);
+    }
+
+    body[lang="ar"] .project-title { font-family: var(--font-arabic-display); font-weight: 600; }
+
+    .project-year {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--fg-subtle);
+      padding: 0.2rem 0.5rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      flex-shrink: 0;
+    }
+
+    .project-desc {
+      font-size: 0.92rem;
+      color: var(--fg-muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.6;
+      position: relative;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1.25rem;
+      position: relative;
+    }
+
+    .project-tag {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--fg-muted);
+      padding: 0.2rem 0.55rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 1rem;
+      position: relative;
+    }
+
+    .project-link {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--fg-muted);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: color 0.15s;
+    }
+
+    .project-link::after {
+      content: '↗';
+      font-size: 0.85rem;
+    }
+
+    .project-link:hover { color: var(--accent); }
+
+    .project-empty .project-title { color: var(--fg-subtle); }
+    .project-empty { opacity: 0.5; }
+  </style>
+</head>
+<body lang="en">
+  <div class="bg-grid"></div>
+  <div class="bg-spotlight"></div>
+  <div class="bg-noise"></div>
+
+  <div id="header-placeholder"></div>
+
+  <main>
+    <section>
+      <div class="eyebrow" data-i18n="projects_eyebrow">Work</div>
+      <h1 data-i18n="projects_title">Selected work</h1>
+      <p style="margin-top: 1rem; max-width: 540px;" data-i18n="projects_subtitle">A small set of things I've built or am building.</p>
+
+      <div class="projects-grid" id="projects-grid"></div>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="partials.js"></script>
+  <script src="script.js"></script>
+  <script src="projects-data.js"></script>
+  <script>
+    function renderProjectsGrid() {
+      const lang = document.body.getAttribute('lang') || 'en';
+      const linkLabels = { github: 'github', demo: 'live demo' };
+
+      document.getElementById('projects-grid').innerHTML = PROJECTS.map((p) => `
+        <article class="project-card reveal visible" data-id="${p.id}">
+          <div class="project-header">
+            <h3 class="project-title">${p.title[lang]}</h3>
+            <span class="project-year">${p.year}</span>
+          </div>
+          <p class="project-desc">${p.desc[lang]}</p>
+          <div class="project-tags">
+            ${p.tags.map((tag) => `<span class="project-tag">${tag}</span>`).join('')}
+          </div>
+          <div class="project-links">
+            ${Object.entries(p.links || {}).map(([type, url]) => `<a href="${url}" class="project-link">${linkLabels[type] || type}</a>`).join('')}
+          </div>
+        </article>
+      `).join('');
+
+      document.querySelectorAll('.project-card[data-id]').forEach((card) => {
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', (e) => {
+          if (e.target.closest('.project-link')) return; // let github/demo links work normally
+          window.location.href = 'project.html?id=' + card.dataset.id;
+        });
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', renderProjectsGrid);
+    document.addEventListener('langchange', renderProjectsGrid);
+  </script>
+</body>
+</html>

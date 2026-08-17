@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Suliman</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    @media (min-width: 900px) {
+      .about-grid { grid-template-columns: 1.4fr 1fr; gap: 4rem; }
+    }
+
+    .about-text p {
+      font-size: 1.05rem;
+      color: var(--fg);
+      margin-bottom: 1.25rem;
+    }
+
+    .about-text p:last-child { color: var(--fg-muted); }
+
+    .stack-card {
+      background: var(--bg-glass);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      position: sticky;
+      top: 6rem;
+    }
+
+    .stack-row {
+      padding: 0.85rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stack-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .stack-row:first-child { padding-top: 0; }
+
+    .stack-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+
+    .stack-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .chip {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--fg-muted);
+      padding: 0.25rem 0.65rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      transition: all 0.15s;
+    }
+
+    .chip:hover {
+      color: var(--fg);
+      border-color: var(--border-hover);
+      background: rgba(255,255,255,0.07);
+    }
+
+    @media (max-width: 900px) {
+      .stack-card { position: static; }
+    }
+  </style>
+</head>
+<body lang="en">
+  <div class="bg-grid"></div>
+  <div class="bg-spotlight"></div>
+  <div class="bg-noise"></div>
+
+  <div id="header-placeholder"></div>
+
+  <main>
+    <section>
+      <div class="eyebrow" data-i18n="about_eyebrow">About</div>
+      <h1 data-i18n="about_title">About</h1>
+
+      <div class="about-grid" style="margin-top: 3rem;">
+        <div class="about-text">
+          <p data-i18n="about_p1">Computer Science student at Imam Mohammad Ibn Saud Islamic University. I work primarily on backend systems, databases, and AI integration — places where the logic has to be exact and the design has to be clean.</p>
+          <p data-i18n="about_p2">I tend to fact-check claims and push back when something looks wrong. I prefer step-by-step approaches over big rewrites, and I value tools that are simple over tools that are clever.</p>
+          <p data-i18n="about_p3">Outside the keyboard: aviation history, processor hardware, economics, and historical events.</p>
+        </div>
+
+        <div class="stack-card">
+          <div class="stack-row">
+            <div class="stack-label" data-i18n="stack_lang">Languages</div>
+            <div class="stack-items">
+              <span class="chip">JavaScript</span>
+              <span class="chip">Python</span>
+              <span class="chip">SQL</span>
+            </div>
+          </div>
+          <div class="stack-row">
+            <div class="stack-label" data-i18n="stack_backend">Backend</div>
+            <div class="stack-items">
+              <span class="chip">Node.js</span>
+              <span class="chip">Express</span>
+              <span class="chip">Flask</span>
+            </div>
+          </div>
+          <div class="stack-row">
+            <div class="stack-label" data-i18n="stack_db">Databases</div>
+            <div class="stack-items">
+              <span class="chip">PostgreSQL</span>
+              <span class="chip">MySQL</span>
+              <span class="chip">MongoDB</span>
+            </div>
+          </div>
+          <div class="stack-row">
+            <div class="stack-label" data-i18n="stack_ai">AI / ML</div>
+            <div class="stack-items">
+              <span class="chip">CLIP</span>
+              <span class="chip">Gemini API</span>
+              <span class="chip">Embeddings</span>
+            </div>
+          </div>
+          <div class="stack-row">
+            <div class="stack-label" data-i18n="stack_other">Other</div>
+            <div class="stack-items">
+              <span class="chip">GitHub</span>
+              <span class="chip">Linux</span>
+              <span class="chip">Cloud</span>
+              <span class="chip">Railway</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="partials.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

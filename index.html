@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Suliman — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Home-specific */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    @media (min-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1.3fr 1fr;
+        gap: 4rem;
+      }
+    }
+
+    .work-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .work-item {
+      display: grid;
+      grid-template-columns: 80px 1fr auto;
+      gap: 1.5rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none;
+      color: inherit;
+      align-items: baseline;
+      transition: padding 0.25s;
+      position: relative;
+    }
+
+    .work-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, var(--bg-glass), transparent);
+      opacity: 0;
+      transition: opacity 0.25s;
+      border-radius: 4px;
+      pointer-events: none;
+    }
+
+    .work-item:hover::before { opacity: 1; }
+    .work-item:hover { padding-left: 1rem; padding-right: 1rem; }
+
+    .work-item:last-child { border-bottom: none; }
+
+    .work-year {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--fg-subtle);
+    }
+
+    .work-info {
+      min-width: 0;
+    }
+
+    .work-info h3 {
+      margin-bottom: 0.3rem;
+      transition: color 0.15s;
+      color: var(--fg);
+    }
+
+    .work-item:hover h3 { color: var(--accent); }
+
+    .work-info p {
+      font-size: 0.88rem;
+      color: var(--fg-muted);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .work-arrow {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: var(--fg-subtle);
+      transition: transform 0.2s, color 0.2s;
+    }
+
+    .work-item:hover .work-arrow {
+      color: var(--accent);
+      transform: translateX(6px);
+    }
+
+    body[lang="ar"] .work-item:hover .work-arrow { transform: translateX(-6px); }
+
+    .view-all {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--fg-muted);
+      text-decoration: none;
+      margin-top: 2rem;
+      padding: 0.5rem 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--bg-glass);
+      transition: all 0.2s;
+    }
+
+    body[lang="ar"] .view-all {
+      font-family: var(--font-arabic);
+    }
+
+    .view-all:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    @media (max-width: 640px) {
+      .work-item { grid-template-columns: 60px 1fr; gap: 1rem; }
+      .work-arrow { display: none; }
+    }
+  </style>
+</head>
+<body lang="en">
+  <div class="bg-grid"></div>
+  <div class="bg-spotlight"></div>
+  <div class="bg-noise"></div>
+
+  <div id="header-placeholder"></div>
+
+  <main>
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <div class="hero-status">
+            <span class="pulse"></span>
+            <span data-i18n="hero_status">Available for work</span>
+          </div>
+          <h1>
+            <span data-i18n="hero_hi">Hello,</span>
+            <span data-i18n="hero_iam">I am</span>
+            <span class="gradient-text" data-i18n="hero_name">Suliman</span>
+          </h1>
+          <p class="hero-bio" data-i18n-html="hero_bio_html">
+            Computer Science graduate turning <strong>raw ideas</strong> into <strong>real systems</strong> — from AI-powered platforms to backends that quietly do the heavy lifting.
+          </p>
+          <div class="hero-actions">
+            <a href="projects.html" class="btn btn-primary">
+              <span data-i18n="hero_cta">View work</span>
+              <span class="arrow">→</span>
+            </a>
+            <a href="contact.html" class="btn btn-ghost" data-i18n="hero_cta_2">Get in touch</a>
+          </div>
+        </div>
+
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot"></span>
+            <span class="terminal-dot"></span>
+            <span class="terminal-dot"></span>
+            <span class="terminal-title">~/suliman — zsh</span>
+          </div>
+          <div class="terminal-body">
+            <div class="terminal-line">
+              <span class="terminal-prompt">$</span> <span class="terminal-cmd">whoami</span>
+            </div>
+            <div class="terminal-line terminal-out">→ suliman, cs graduate @ imamu</div>
+            <div class="terminal-line" style="margin-top: 0.7rem;">
+              <span class="terminal-prompt">$</span> <span class="terminal-cmd">cat stack.json</span>
+            </div>
+            <div class="terminal-line terminal-out">{</div>
+            <div class="terminal-line terminal-out">&nbsp;&nbsp;<span class="terminal-tag">"backend"</span>: ["node", "express", "flask"],</div>
+            <div class="terminal-line terminal-out">&nbsp;&nbsp;<span class="terminal-tag">"db"</span>: ["postgres", "mysql", "mongo"],</div>
+            <div class="terminal-line terminal-out">&nbsp;&nbsp;<span class="terminal-tag">"ai"</span>: ["clip", "gemini", "embeddings"],</div>
+            <div class="terminal-line terminal-out">&nbsp;&nbsp;<span class="terminal-tag">"focus"</span>: ["devops", "cloud", "pmo"],</div>
+            <div class="terminal-line terminal-out">&nbsp;&nbsp;<span class="terminal-tag">"certs"</span>: ["security+", "AWS Cloud Practiotioner"]</div>
+            <div class="terminal-line terminal-out">}</div>
+            <div class="terminal-line" style="margin-top: 0.7rem;">
+              <span class="terminal-prompt">$</span><span class="terminal-cursor"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="reveal">
+      <div class="section-header">
+        <div>
+          <div class="eyebrow">02 / Work</div>
+          <h2 data-i18n="home_work_title">Selected work</h2>
+        </div>
+        <span class="meta" data-i18n="home_work_meta">Recent — 2026</span>
+      </div>
+      <div class="work-list" id="work-list"></div>
+      <a href="projects.html" class="view-all">
+        <span data-i18n="home_work_all">See all projects</span>
+        <span>→</span>
+      </a>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="partials.js"></script>
+  <script src="script.js"></script>
+  <script src="projects-data.js"></script>
+  <script>
+    function renderWorkList() {
+      const lang = document.body.getAttribute('lang') || 'en';
+      document.getElementById('work-list').innerHTML = PROJECTS.slice(0, 3).map((p) => `
+        <a href="project.html?id=${p.id}" class="work-item">
+          <span class="work-year">${p.year}</span>
+          <div class="work-info">
+            <h3>${p.title[lang]}</h3>
+            <p>${p.desc[lang]}</p>
+          </div>
+          <span class="work-arrow">↗</span>
+        </a>
+      `).join('');
+    }
+    document.addEventListener('DOMContentLoaded', renderWorkList);
+    document.addEventListener('langchange', renderWorkList);
+  </script>
+</body>
+</html>
